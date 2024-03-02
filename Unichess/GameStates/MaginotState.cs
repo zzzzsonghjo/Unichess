@@ -4,12 +4,13 @@ namespace Unichess.GameStates
 {
     public class MaginotState(int rows, int cols) : GobangState(rows, cols)
     {
+        public override int StateID => 0;
+        public override string StateName => "马奇诺棋";
+
         private List<Position> FitPositions { get; set; } = [];
         private List<Position> Offsets => [new(1, 2), new(2, 1), new(-1, 2), new(2, -1), new(1, -2), new(-2, 1), new(-1, -2), new(-2, -1)];
 
         protected override List<Piece> PiecesList => [new BlackPiece(), new WhitePiece(), new BlackGhostPiece(), new WhiteGhostPiece()];
-
-        public override string StateName => "马奇诺棋";
 
         public override int? Judge()
         {
@@ -74,6 +75,7 @@ namespace Unichess.GameStates
                 DisplayList.RemoveAt(DisplayList.Count - 1);
                 if (Round > 3) GetFitPositions();
                 History.Pop();
+                IsRunning = true;
             }
         }
 

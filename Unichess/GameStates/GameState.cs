@@ -4,6 +4,9 @@ namespace Unichess.GameStates
 {
     public abstract class GameState(int rows, int cols)
     {
+        public abstract string StateName { get; }
+        public abstract int StateID { get; }
+
         public Board Board { get; private set; } = new Board(rows, cols);
         public int Rows => Board.Rows;
         public int Cols => Board.Cols;
@@ -12,7 +15,6 @@ namespace Unichess.GameStates
         protected PieceRecorder History { get; set; } = new PieceRecorder();
 
         public int Round => History.Count + 1;
-        public abstract string StateName { get; }
         protected abstract List<Piece> PiecesList { get; }
 
         public List<Piece> DisplayList { get; private set; } = [];

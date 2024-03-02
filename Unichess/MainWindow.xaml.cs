@@ -81,6 +81,9 @@ namespace Unichess
 
         private void B_Back_Click(object sender, RoutedEventArgs e)
         {
+            StartWindow startWindow = new(Rows, Cols, State.StateID);
+            startWindow.Show();
+            this.Close();
         }
 
         private void ClickGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)

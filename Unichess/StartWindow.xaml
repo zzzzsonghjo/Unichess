@@ -16,17 +16,17 @@
         <StackPanel Margin="10" VerticalAlignment="Center">
             <DockPanel VerticalAlignment="Center" Margin="10">
                 <Label DockPanel.Dock="Left" FontWeight="Bold">行</Label>
-                <TextBox Text="{Binding ElementName=slRows, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" TextAlignment="Right" Width="40" />
-                <Slider Minimum="3" Maximum="30" TickPlacement="BottomRight" TickFrequency="1" IsSnapToTickEnabled="True" Name="slRows"/>
+                <TextBox x:Name="Tb_Rows" Text="{Binding ElementName=Sl_Rows, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" TextAlignment="Right" Width="40" />
+                <Slider Minimum="14" Maximum="30" TickPlacement="BottomRight" TickFrequency="1" IsSnapToTickEnabled="True" Name="Sl_Rows" Value="19"/>
             </DockPanel>
 
             <DockPanel VerticalAlignment="Center" Margin="10">
                 <Label DockPanel.Dock="Left" FontWeight="Bold">列</Label>
-                <TextBox Text="{Binding ElementName=slCols, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" TextAlignment="Right" Width="40" />
-                <Slider Minimum="3" Maximum="30" TickPlacement="BottomRight" TickFrequency="1" IsSnapToTickEnabled="True" Name="slCols"/>
+                <TextBox x:Name="Tb_Cols" Text="{Binding ElementName=Sl_Cols, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" TextAlignment="Right" Width="40" />
+                <Slider Minimum="14" Maximum="30" TickPlacement="BottomRight" TickFrequency="1" IsSnapToTickEnabled="True" Name="Sl_Cols" Value="19"/>
             </DockPanel>
 
-            <ComboBox x:Name="CB_Mode" SelectedIndex="0">
+            <ComboBox x:Name="Cb_GameMode" SelectedIndex="0" SelectionChanged="Cb_GameMode_SelectionChanged">
                 <ComboBoxItem Content="马奇诺棋"/>
                 <ComboBoxItem Content="五子棋"/>
                 <ComboBoxItem Content="井字棋"/>

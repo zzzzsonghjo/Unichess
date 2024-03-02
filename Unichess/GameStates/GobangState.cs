@@ -4,9 +4,10 @@ namespace Unichess.GameStates
 {
     public class GobangState(int rows, int cols) : GameState(rows, cols)
     {
-        protected override List<Piece> PiecesList => [new BlackPiece(), new WhitePiece()];
-
+        public override int StateID => 1;
         public override string StateName => "五子棋";
+
+        protected override List<Piece> PiecesList => [new BlackPiece(), new WhitePiece()];
 
         public override int? Judge()
         {
@@ -39,6 +40,7 @@ namespace Unichess.GameStates
                 Board.Remove(History.Peek().Position);
                 DisplayList.RemoveAt(DisplayList.Count - 1);
                 History.Pop();
+                IsRunning = true;
             }
         }
 

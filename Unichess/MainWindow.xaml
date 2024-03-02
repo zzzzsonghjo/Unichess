@@ -21,10 +21,6 @@
                         Content="悔棋"
                         Click="B_Undo_Click"/>
                 <Separator/>
-                <Button x:Name="B_Redo"
-                        Content="重做"
-                        Click="B_Redo_Click"/>
-                <Separator/>
                 <Button x:Name="B_Restart"
                         Content="重开"
                         Click="B_Restart_Click"/>
