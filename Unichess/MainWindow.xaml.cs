@@ -16,21 +16,15 @@ namespace Unichess
     /// </summary>
     public partial class MainWindow : Window
     {
-        private GameState GameState { get; set; }
         private string TitleString { get; set; }
         public int Rows { get; set; }
         public int Cols { get; set; }
-        private GameConfig Config { get; set; }
 
         private static int PieceSize { get => 30; }
 
-        public MainWindow(GameConfig config)
+        public MainWindow()
         {
             InitializeComponent();
-            Config = config;
-            Rows = Config.Rows; Cols = Config.Cols;
-            TitleString = Config.Limited ? "马奇诺棋" : "五子棋";
-            GameState = new GameState(Config);
             ResetTitle();
             Height = Rows * 25 + 60;
             MinWidth = Cols * 25;
@@ -72,82 +66,34 @@ namespace Unichess
 
         private void B_Undo_Click(object sender, RoutedEventArgs e)
         {
-            GameState.Undo();
-            ResetTitle();
-            Draw();
         }
 
         private void B_Redo_Click(object sender, RoutedEventArgs e)
         {
-            GameState.Redo();
-            ResetTitle();
-            Draw();
         }
 
         private void B_Restart_Click(object sender, RoutedEventArgs e)
         {
-            GameState = new GameState(Config);
-            ResetTitle();
-            Draw();
         }
 
         private void B_Back_Click(object sender, RoutedEventArgs e)
         {
-            StartWindow startWindow = new(Config);
-            startWindow.Show();
-            this.Close();
         }
 
         private void ClickGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            var p = e.GetPosition(ClickGrid);
-            if (GameState.Put(new Position((int)p.Y / PieceSize, (int)p.X / PieceSize)))
-            {
-                ResetTitle();
-                Draw();
-                if (GameState.Winner != null)
-                {
-                    MessageBox.Show((GameState.Winner == Piece.Black ? "黑" : "白") + "子获胜", "游戏结束");
-                    GameState = new GameState(Config);
-                    ResetTitle();
-                    Draw();
-                }
-            }
         }
 
         private static void DrawPiece(Grid grid, Grid piece, int row, int col)
         {
-            Grid.SetRow(piece, row);
-            Grid.SetColumn(piece, col);
-            grid.Children.Add(piece);
         }
 
         private void ResetTitle()
         {
-            Title = TitleString + $" - {Rows}x{Cols} - Round {GameState.Round} " + ((GameState.Round % 2 == 1) ? "(Black)" : "(White)");
         }
 
         private void Draw()
         {
-            ClickGrid.Children.Clear();
-            for (int row = 0; row < Rows; row++)
-            {
-                for (int col = 0; col < Cols; col++)
-                {
-                    if (GameState.Board.BoardState[row, col] == Piece.Black)
-                    {
-                        DrawPiece(ClickGrid, Piece.BlackPiece, row, col);
-                    }
-                    else if (GameState.Board.BoardState[row, col] == Piece.White)
-                    {
-                        DrawPiece(ClickGrid, Piece.WhitePiece, row, col);
-                    }
-                }
-            }
-            foreach (var position in GameState.FitPositions)
-            {
-                DrawPiece(ClickGrid, (GameState.Round % 2 == 0) ? Piece.WhiteRedPiece : Piece.BlackRedPiece, position.Row, position.Col);
-            }
         }
     }
 }

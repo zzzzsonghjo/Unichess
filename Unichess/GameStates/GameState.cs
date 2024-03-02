@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Unichess.Pieces;
 
-namespace Unichess.New.GameStates
+namespace Unichess.GameStates
 {
     public abstract class GameState
     {
@@ -34,5 +35,6 @@ namespace Unichess.New.GameStates
         public abstract void Redo();
 
         public abstract int? Judge();
+        public abstract void Restart();
     }
 }

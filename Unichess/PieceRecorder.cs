@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Unichess.Pieces;
 
-namespace Unichess.New
+namespace Unichess
 {
     public class PieceRecorder
     {
@@ -104,6 +106,18 @@ namespace Unichess.New
             Count = 0;
             Black.Clear();
             White.Clear();
+        }
+
+        public Piece this[int index]
+        {
+            get
+            {
+                if (index >= Count) throw new Exception("Index out of range");
+                if (index % 2 == 0)
+                    return Black[index / 2];
+                else
+                    return White[index / 2];
+            }
         }
     }
 }

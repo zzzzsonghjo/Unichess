@@ -5,9 +5,9 @@
         public int Row { get; set; } = row;
         public int Col { get; set; } = col;
 
-        static public Position operator +(Position a, Position b)
+        public static Position operator +(Position p1, Position p2)
         {
-            return new Position(a.Row + b.Row, a.Col + b.Col);
+            return new Position(p1.Row + p2.Row, p1.Col + p2.Col);
         }
     }
 }

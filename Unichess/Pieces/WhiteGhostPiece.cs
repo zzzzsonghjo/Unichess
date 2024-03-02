@@ -1,10 +1,11 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace Unichess.New.Pieces
+namespace Unichess.Pieces
 {
     public class WhiteGhostPiece : Piece
     {
+        public WhiteGhostPiece() : base() { }
         public WhiteGhostPiece(Position position) : base(position) { }
 
         public override Grid GetGrid

@@ -1,11 +1,12 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace Unichess.New.Pieces
+namespace Unichess.Pieces
 {
-    public class WhitePiece : Piece
+    public class BlackPiece : Piece
     {
-        public WhitePiece(Position position) : base(position) { }
+        public BlackPiece() : base() { }
+        public BlackPiece(Position position) : base(position) { }
 
         public override Grid GetGrid
         {
@@ -24,8 +25,8 @@ namespace Unichess.New.Pieces
                     RadiusY = 0.4
                 };
                 brush.GradientStops.Add(new GradientStop(Colors.White, 0));
-                brush.GradientStops.Add(new GradientStop(new Color() { R = 239, G = 239, B = 239, A = 255 }, 0.5));
-                brush.GradientStops.Add(new GradientStop(new Color() { R = 227, G = 227, B = 227, A = 255 }, 1));
+                brush.GradientStops.Add(new GradientStop(Colors.LightGray, 0.2));
+                brush.GradientStops.Add(new GradientStop(Colors.Black, 1));
                 border.Background = brush;
                 piece.Children.Add(border);
                 piece.Margin = new System.Windows.Thickness(0.5);
@@ -33,6 +34,6 @@ namespace Unichess.New.Pieces
             }
         }
 
-        public override int Type => 2;
+        public override int Type => 1;
     }
 }
