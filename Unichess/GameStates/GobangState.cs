@@ -16,6 +16,8 @@ namespace Unichess.GameStates
 
         protected override List<Piece> PiecesList => [new BlackPiece(), new WhitePiece()];
 
+        public override string StateName => "五子棋";
+
         public override int? Judge()
         {
             return GobangstyleJudge(5, 5);
@@ -23,13 +25,15 @@ namespace Unichess.GameStates
 
         public override void React(Position position)
         {
-            int type = Round % 2;
+            if (!IsRunning) return;
+            int type = (Round + 1) % 2;
             if (Board.Check(position))
             {
                 var piece = PiecesList[type];
                 piece.Position = position;
                 History.Push(piece);
                 Board.Set(position, History.Peek().Type);
+                DisplayList.Add(piece);
             }
         }
 
@@ -47,9 +51,10 @@ namespace Unichess.GameStates
         {
             if (History.Count > 0)
             {
-                RedoRec.Push(History.Pop());
+                RedoRec.Push(History.Peek());
                 Board.Remove(History.Peek().Position);
                 DisplayList.RemoveAt(DisplayList.Count - 1);
+                History.Pop();
             }
         }
 
@@ -59,6 +64,7 @@ namespace Unichess.GameStates
             RedoRec.Clear();
             DisplayList.Clear();
             Board.Clear();
+            IsRunning = true;
         }
 
         /// <summary>

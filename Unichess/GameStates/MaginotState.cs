@@ -19,6 +19,8 @@ namespace Unichess.GameStates
 
         protected override List<Piece> PiecesList => [new BlackPiece(), new WhitePiece(), new BlackGhostPiece(), new WhiteGhostPiece()];
 
+        public override string StateName => "马奇诺棋";
+
         public override int? Judge()
         {
             if (Round > 2)
@@ -54,7 +56,8 @@ namespace Unichess.GameStates
 
         public override void React(Position position)
         {
-            int type = Round % 2;
+            if (!IsRunning) return;
+            int type = (Round + 1) % 2;
             if (Board.Check(position))
             {
                 if (Round > 2 && !FitPositions.Contains(position)) return;
@@ -63,9 +66,10 @@ namespace Unichess.GameStates
                 History.Push(piece);
                 Board.Set(position, History.Peek().Type);
                 FitPositions.Clear();
+                RmFitPosFromDisplay();
+                DisplayList.Add(piece);
                 if (Round > 2)
                 {
-                    RmFitPosFromDisplay();
                     GetFitPositions();
                 }
             }
@@ -90,11 +94,12 @@ namespace Unichess.GameStates
         {
             if (History.Count > 0)
             {
-                RedoRec.Push(History.Pop());
+                RedoRec.Push(History.Peek());
                 Board.Remove(History.Peek().Position);
                 if (Round > 2) RmFitPosFromDisplay();
                 DisplayList.RemoveAt(DisplayList.Count - 1);
                 if (Round > 2) GetFitPositions();
+                History.Pop();
             }
         }
 

@@ -16,10 +16,11 @@
         {
             if (IsIn(position))
             {
-                if (Check(position)) { BoardState[position.Row, position.Col] = type; }
-                else { throw new Exception("The position has already occupied"); }
+                if (Check(position))
+                {
+                    BoardState[position.Row, position.Col] = type;
+                }
             }
-            else { throw new Exception("Invalid Position"); }
         }
 
         public int? Get(Position position) =>

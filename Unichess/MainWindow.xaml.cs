@@ -8,6 +8,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Unichess.GameStates;
+using Unichess.Pieces;
 
 namespace Unichess
 {
@@ -16,20 +18,21 @@ namespace Unichess
     /// </summary>
     public partial class MainWindow : Window
     {
-        private string TitleString { get; set; }
-        public int Rows { get; set; }
-        public int Cols { get; set; }
+        private GameState State { get; set; }
+        public int Rows => State.Rows;
+        public int Cols => State.Cols;
 
-        private static int PieceSize { get => 30; }
+        private static int PieceSize => 30;
 
-        public MainWindow()
+        public MainWindow(GameState gameState)
         {
             InitializeComponent();
+            State = gameState;
             ResetTitle();
-            Height = Rows * 25 + 60;
+            Height = Rows * 25 + 50;
             MinWidth = Cols * 25;
-            MinHeight = Math.Max(Rows * 15 + 60, 100);
-            MinWidth = Math.Max(Cols * 15, (int)(100F / Rows * Cols));
+            MinHeight = Math.Max(Rows * 13 + 50, 100);
+            MinWidth = Math.Max(Cols * 13, (int)(100F * Rows / Cols));
             InitBoardGrid();
         }
 
@@ -66,14 +69,20 @@ namespace Unichess
 
         private void B_Undo_Click(object sender, RoutedEventArgs e)
         {
+            State.Undo();
+            Draw();
         }
 
         private void B_Redo_Click(object sender, RoutedEventArgs e)
         {
+            State.Redo();
+            Draw();
         }
 
         private void B_Restart_Click(object sender, RoutedEventArgs e)
         {
+            State.Restart();
+            Draw();
         }
 
         private void B_Back_Click(object sender, RoutedEventArgs e)
@@ -82,18 +91,40 @@ namespace Unichess
 
         private void ClickGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            var p = e.GetPosition(ClickGrid);
+            int row = (int)p.Y / PieceSize;
+            int col = (int)p.X / PieceSize;
+            State.React(new(row, col));
+            var Winner = State.Judge();
+            Draw();
+            if (Winner != null)
+            {
+                MessageBox.Show((Winner == 1 ? "先手方" : "后手方") + "获胜", "胜负已分");
+                State.IsRunning = false;
+            }
         }
 
-        private static void DrawPiece(Grid grid, Grid piece, int row, int col)
+        private void DrawPiece(Piece piece)
         {
+            var pieceGrid = piece.GetGrid;
+            ClickGrid.Children.Add(pieceGrid);
+            Grid.SetRow(pieceGrid, piece.Position.Row);
+            Grid.SetColumn(pieceGrid, piece.Position.Col);
         }
 
         private void ResetTitle()
         {
+            Title = $"{State.StateName} - {Rows}x{Cols} - Round {State.Round} - " + (State.Round % 2 == 1 ? "先手方" : "后手方");
         }
 
         private void Draw()
         {
+            ClickGrid.Children.Clear();
+            foreach (var piece in State.DisplayList)
+            {
+                DrawPiece(piece);
+            }
+            ResetTitle();
         }
     }
 }

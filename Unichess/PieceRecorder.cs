@@ -14,61 +14,12 @@ namespace Unichess
         private readonly List<Piece> White = [];
         public int Count { get; private set; } = 0;
 
-        public Piece Peek()
-        {
-            if (Count % 2 == 1)
-            {
-                try
-                {
-                    return Black.Last();
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-            }
-            else
-            {
-                try
-                {
-                    return White.Last();
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-            }
-        }
-
-        public Piece Peek2()
-        {
-            if (Count % 2 == 0)
-            {
-                try
-                {
-                    return Black.Last();
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-            }
-            else
-            {
-                try
-                {
-                    return White.Last();
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-            }
-        }
+        public Piece Peek() => (Count % 2 == 1) ? Black.Last() : White.Last();
+        public Piece Peek2() => (Count % 2 == 0) ? Black.Last() : White.Last();
 
         public Piece Pop()
         {
-            if (Count % 2 == 0)
+            if (Count % 2 == 1)
             {
                 if (Black.Count > 0)
                 {

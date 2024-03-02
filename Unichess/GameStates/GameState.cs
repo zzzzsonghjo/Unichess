@@ -10,13 +10,15 @@ namespace Unichess.GameStates
     public abstract class GameState
     {
         public Board Board { get; private set; }
-        protected int Rows => Board.Rows;
-        protected int Cols => Board.Cols;
+        public int Rows => Board.Rows;
+        public int Cols => Board.Cols;
+        public bool IsRunning { get; set; }
 
         protected PieceRecorder History { get; set; }
         protected PieceRecorder RedoRec { get; set; }
 
         public int Round => History.Count + 1;
+        public abstract string StateName { get; }
         protected abstract List<Piece> PiecesList { get; }
 
         public List<Piece> DisplayList { get; private set; }
@@ -27,6 +29,7 @@ namespace Unichess.GameStates
             History = new PieceRecorder();
             RedoRec = new PieceRecorder();
             DisplayList = [];
+            IsRunning = true;
         }
 
         public abstract void React(Position position);

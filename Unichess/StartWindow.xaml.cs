@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Unichess.GameStates;
 
 namespace Unichess
 {
@@ -26,6 +27,8 @@ namespace Unichess
 
         private void B_Start_Click(object sender, RoutedEventArgs e)
         {
+            MainWindow mainWindow = new(new GobangState(19,19));
+            mainWindow.Show();
         }
     }
 }
