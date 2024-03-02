@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Unichess.Pieces;
+﻿using Unichess.Pieces;
 
 namespace Unichess.GameStates
 {
@@ -70,23 +65,10 @@ namespace Unichess.GameStates
             }
         }
 
-        public override void Redo()
-        {
-            if (RedoRec.Count > 0)
-            {
-                History.Push(RedoRec.Pop());
-                Board.Set(History.Peek().Position, History.Peek().Type);
-                RemoveFitPositions();
-                DisplayList.Add(History.Peek());
-                if (Round > 2) GetFitPositions();
-            }
-        }
-
         public override void Undo()
         {
             if (History.Count > 0)
             {
-                RedoRec.Push(History.Peek());
                 Board.Remove(History.Peek().Position);
                 RemoveFitPositions();
                 DisplayList.RemoveAt(DisplayList.Count - 1);

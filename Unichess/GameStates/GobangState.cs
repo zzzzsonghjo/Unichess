@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Unichess.Pieces;
+﻿using Unichess.Pieces;
 
 namespace Unichess.GameStates
 {
@@ -16,6 +10,11 @@ namespace Unichess.GameStates
 
         public override int? Judge()
         {
+            if (Board.IsFull())
+            {
+                if (GobangstyleJudge(5, 5) == null)
+                    return 0;
+            }
             return GobangstyleJudge(5, 5);
         }
 
@@ -33,21 +32,10 @@ namespace Unichess.GameStates
             }
         }
 
-        public override void Redo()
-        {
-            if (RedoRec.Count > 0)
-            {
-                History.Push(RedoRec.Pop());
-                Board.Set(History.Peek().Position, History.Peek().Type);
-                DisplayList.Add(History.Peek());
-            }
-        }
-
         public override void Undo()
         {
             if (History.Count > 0)
             {
-                RedoRec.Push(History.Peek());
                 Board.Remove(History.Peek().Position);
                 DisplayList.RemoveAt(DisplayList.Count - 1);
                 History.Pop();
@@ -57,7 +45,6 @@ namespace Unichess.GameStates
         public override void Restart()
         {
             History.Clear();
-            RedoRec.Clear();
             DisplayList.Clear();
             Board.Clear();
             IsRunning = true;

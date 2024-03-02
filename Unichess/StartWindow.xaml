@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Unichess"
         mc:Ignorable="d"
-        Title="StartWindow" Height="300" Width="450"
-        MinHeight="300" MinWidth="450">
+        Title="StartWindow" Height="300" Width="300"
+        MinHeight="300" MinWidth="300">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -26,7 +26,11 @@
                 <Slider Minimum="3" Maximum="30" TickPlacement="BottomRight" TickFrequency="1" IsSnapToTickEnabled="True" Name="slCols"/>
             </DockPanel>
 
-            <CheckBox x:Name="LimitCB" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">马奇诺棋模式</CheckBox>
+            <ComboBox x:Name="CB_Mode" SelectedIndex="0">
+                <ComboBoxItem Content="马奇诺棋"/>
+                <ComboBoxItem Content="五子棋"/>
+                <ComboBoxItem Content="井字棋"/>
+            </ComboBox>
         </StackPanel>
 
         <Grid Grid.Row="1">

@@ -29,10 +29,10 @@ namespace Unichess
             InitializeComponent();
             State = gameState;
             ResetTitle();
-            Height = Rows * 25 + 50;
-            MinWidth = Cols * 25;
-            MinHeight = Math.Max(Rows * 13 + 50, 100);
-            MinWidth = Math.Max(Cols * 13, (int)(100F * Rows / Cols));
+            Height = Rows * 25 + 100;
+            Width = Cols * 25;
+            MinHeight = Math.Max(Rows * 13 + 100, 300);
+            MinWidth = Math.Max(Cols * 13, (int)(300F * Rows / Cols));
             InitBoardGrid();
         }
 
@@ -73,12 +73,6 @@ namespace Unichess
             Draw();
         }
 
-        private void B_Redo_Click(object sender, RoutedEventArgs e)
-        {
-            State.Redo();
-            Draw();
-        }
-
         private void B_Restart_Click(object sender, RoutedEventArgs e)
         {
             State.Restart();
@@ -99,7 +93,7 @@ namespace Unichess
             Draw();
             if (Winner != null)
             {
-                MessageBox.Show((Winner == 1 ? "先手方" : "后手方") + "获胜", "胜负已分");
+                MessageBox.Show(Winner == 0 ? "平局" : (Winner == 1 ? "先手方获胜" : "后手方获胜"), "胜负已分");
                 State.IsRunning = false;
             }
         }

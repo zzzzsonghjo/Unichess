@@ -1,41 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Unichess.Pieces;
+﻿using Unichess.Pieces;
 
 namespace Unichess.GameStates
 {
-    public abstract class GameState
+    public abstract class GameState(int rows, int cols)
     {
-        public Board Board { get; private set; }
+        public Board Board { get; private set; } = new Board(rows, cols);
         public int Rows => Board.Rows;
         public int Cols => Board.Cols;
-        public bool IsRunning { get; set; }
+        public bool IsRunning { get; set; } = true;
 
-        protected PieceRecorder History { get; set; }
-        protected PieceRecorder RedoRec { get; set; }
+        protected PieceRecorder History { get; set; } = new PieceRecorder();
 
         public int Round => History.Count + 1;
         public abstract string StateName { get; }
         protected abstract List<Piece> PiecesList { get; }
 
-        public List<Piece> DisplayList { get; private set; }
-
-        public GameState(int rows, int cols)
-        {
-            Board = new Board(rows, cols);
-            History = new PieceRecorder();
-            RedoRec = new PieceRecorder();
-            DisplayList = [];
-            IsRunning = true;
-        }
+        public List<Piece> DisplayList { get; private set; } = [];
 
         public abstract void React(Position position);
-
         public abstract void Undo();
-        public abstract void Redo();
 
         public abstract int? Judge();
         public abstract void Restart();

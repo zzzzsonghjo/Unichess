@@ -27,7 +27,7 @@ namespace Unichess
 
         private void B_Start_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new(new MaginotState(19, 19));
+            MainWindow mainWindow = new(new SharpState(3, 3));
             mainWindow.Show();
             this.Close();
         }
