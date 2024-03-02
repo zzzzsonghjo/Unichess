@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Unichess"
         mc:Ignorable="d"
-        Title="StartWindow" Height="300" Width="300"
-        MinHeight="300" MinWidth="300">
+        Title="Unichess - 启动页面" Height="300" Width="300"
+        MinHeight="300" MinWidth="300" Icon="/UnichessIcon.png"
+        >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -26,7 +27,7 @@
                 <Slider Minimum="14" Maximum="30" TickPlacement="BottomRight" TickFrequency="1" IsSnapToTickEnabled="True" Name="Sl_Cols" Value="19"/>
             </DockPanel>
 
-            <ComboBox x:Name="Cb_GameMode" SelectedIndex="0" SelectionChanged="Cb_GameMode_SelectionChanged">
+            <ComboBox x:Name="Cb_GameMode" SelectedIndex="0" SelectionChanged="Cb_GameMode_SelectionChanged" Margin="20,0,20,0" FontSize="16">
                 <ComboBoxItem Content="马奇诺棋"/>
                 <ComboBoxItem Content="五子棋"/>
                 <ComboBoxItem Content="井字棋"/>
@@ -38,7 +39,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            
+
             <Button x:Name="B_Start"
                     Grid.Column="0"
                     VerticalAlignment="Bottom"

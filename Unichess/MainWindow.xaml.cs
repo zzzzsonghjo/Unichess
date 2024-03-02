@@ -18,6 +18,13 @@ namespace Unichess
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly BitmapImage[] IconsSource =
+        [
+            new BitmapImage(new Uri("pack://application:,,,/Assets/MaginotChessIcon.png")),
+            new BitmapImage(new Uri("pack://application:,,,/Assets/GobangIcon.png")),
+            new BitmapImage(new Uri("pack://application:,,,/Assets/SharpChessIcon.png")),
+        ];
+
         private GameState State { get; set; }
         public int Rows => State.Rows;
         public int Cols => State.Cols;
@@ -34,6 +41,7 @@ namespace Unichess
             MinHeight = Math.Max(Rows * 13 + 100, 300);
             MinWidth = Math.Max(Cols * 13, (int)(300F * Rows / Cols));
             InitBoardGrid();
+            Icon = IconsSource[State.StateID];
         }
 
         private void InitBoardGrid()
@@ -96,7 +104,7 @@ namespace Unichess
             Draw();
             if (Winner != null)
             {
-                MessageBox.Show(Winner == 0 ? "平局" : (Winner == 1 ? "先手方获胜" : "后手方获胜"), "胜负已分");
+                MessageBox.Show(State.WinnerNames[(int)Winner], "胜负已分");
                 State.IsRunning = false;
             }
         }

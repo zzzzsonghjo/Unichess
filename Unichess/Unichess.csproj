@@ -8,4 +8,20 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Assets\GobangIcon.png" />
+    <None Remove="Assets\MaginotChessIcon.png" />
+    <None Remove="Assets\SharpChessIcon.png" />
+    <None Remove="Assets\UnichessIcon.png" />
+    <None Remove="UnichessIcon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\GobangIcon.png" />
+    <Resource Include="Assets\MaginotChessIcon.png" />
+    <Resource Include="Assets\SharpChessIcon.png" />
+    <Resource Include="Assets\UnichessIcon.png" />
+    <Resource Include="UnichessIcon.png" />
+  </ItemGroup>
+
 </Project>

@@ -6,6 +6,7 @@ namespace Unichess.GameStates
     {
         public abstract string StateName { get; }
         public abstract int StateID { get; }
+        public abstract List<string> WinnerNames { get; }
 
         public Board Board { get; private set; } = new Board(rows, cols);
         public int Rows => Board.Rows;

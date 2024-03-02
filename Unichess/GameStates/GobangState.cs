@@ -6,6 +6,7 @@ namespace Unichess.GameStates
     {
         public override int StateID => 1;
         public override string StateName => "五子棋";
+        public override List<string> WinnerNames => ["平局","黑子获胜","白子获胜"];
 
         protected override List<Piece> PiecesList => [new BlackPiece(), new WhitePiece()];
 
