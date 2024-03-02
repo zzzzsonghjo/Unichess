@@ -8,12 +8,8 @@ using Unichess.Pieces;
 
 namespace Unichess.GameStates
 {
-    public class GobangState : GameState
+    public class GobangState(int rows, int cols) : GameState(rows, cols)
     {
-        public GobangState(int rows, int cols) : base(rows, cols)
-        {
-        }
-
         protected override List<Piece> PiecesList => [new BlackPiece(), new WhitePiece()];
 
         public override string StateName => "五子棋";

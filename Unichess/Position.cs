@@ -9,5 +9,14 @@
         {
             return new Position(p1.Row + p2.Row, p1.Col + p2.Col);
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Position position)
+            {
+                return position.Row == Row && position.Col == Col;
+            }
+            return false;
+        }
     }
 }

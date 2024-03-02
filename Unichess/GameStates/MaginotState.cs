@@ -7,15 +7,10 @@ using Unichess.Pieces;
 
 namespace Unichess.GameStates
 {
-    public class MaginotState : GobangState
+    public class MaginotState(int rows, int cols) : GobangState(rows, cols)
     {
-        private List<Position> FitPositions { get; set; }
+        private List<Position> FitPositions { get; set; } = [];
         private List<Position> Offsets => [new(1, 2), new(2, 1), new(-1, 2), new(2, -1), new(1, -2), new(-2, 1), new(-1, -2), new(-2, -1)];
-
-        public MaginotState(int rows, int cols) : base(rows, cols)
-        {
-            FitPositions = [];
-        }
 
         protected override List<Piece> PiecesList => [new BlackPiece(), new WhitePiece(), new BlackGhostPiece(), new WhiteGhostPiece()];
 
@@ -27,15 +22,16 @@ namespace Unichess.GameStates
             {
                 if (FitPositions.Count == 0)
                 {
-                    return History.Peek2().Type;
+                    return History.Peek().Type;
                 }
             }
             return GobangstyleJudge(5, 6);
         }
 
-        private void RmFitPosFromDisplay()
+        private void RemoveFitPositions()
         {
             DisplayList.RemoveRange(DisplayList.Count - FitPositions.Count, FitPositions.Count);
+            FitPositions.Clear();
         }
 
         private void GetFitPositions()
@@ -46,9 +42,9 @@ namespace Unichess.GameStates
                 var fitPosition = lastPosition + offset;
                 if (Board.Check(fitPosition))
                 {
-                    FitPositions.Add(lastPosition + offset);
-                    var ghost = PiecesList[History.Peek2().Type + 2];
+                    var ghost = PiecesList[History.Peek2().Type + 1];
                     ghost.Position = fitPosition;
+                    FitPositions.Add(fitPosition);
                     DisplayList.Add(ghost);
                 }
             }
@@ -60,13 +56,12 @@ namespace Unichess.GameStates
             int type = (Round + 1) % 2;
             if (Board.Check(position))
             {
-                if (Round > 2 && !FitPositions.Contains(position)) return;
+                if (Round > 2 && (!FitPositions.Contains(position))) return;
                 var piece = PiecesList[type];
                 piece.Position = position;
                 History.Push(piece);
                 Board.Set(position, History.Peek().Type);
-                FitPositions.Clear();
-                RmFitPosFromDisplay();
+                RemoveFitPositions();
                 DisplayList.Add(piece);
                 if (Round > 2)
                 {
@@ -81,12 +76,9 @@ namespace Unichess.GameStates
             {
                 History.Push(RedoRec.Pop());
                 Board.Set(History.Peek().Position, History.Peek().Type);
+                RemoveFitPositions();
                 DisplayList.Add(History.Peek());
-                if (Round > 2)
-                {
-                    RmFitPosFromDisplay();
-                    GetFitPositions();
-                }
+                if (Round > 2) GetFitPositions();
             }
         }
 
@@ -96,9 +88,9 @@ namespace Unichess.GameStates
             {
                 RedoRec.Push(History.Peek());
                 Board.Remove(History.Peek().Position);
-                if (Round > 2) RmFitPosFromDisplay();
+                RemoveFitPositions();
                 DisplayList.RemoveAt(DisplayList.Count - 1);
-                if (Round > 2) GetFitPositions();
+                if (Round > 3) GetFitPositions();
                 History.Pop();
             }
         }
