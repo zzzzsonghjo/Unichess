@@ -37,6 +37,12 @@ namespace Unichess
             set => Sl_Cols.Value = value;
         }
 
+        /// <summary>
+        /// 0 => MaginotChess
+        /// 1 => Gobang
+        /// 2 => SharpChess
+        /// _ => MaginotChess
+        /// </summary>
         private int GameMode
         {
             get => Cb_GameMode.SelectedIndex;

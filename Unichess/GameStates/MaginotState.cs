@@ -73,8 +73,8 @@ namespace Unichess.GameStates
                 Board.Remove(History.Peek().Position);
                 RemoveFitPositions();
                 DisplayList.RemoveAt(DisplayList.Count - 1);
-                if (Round > 3) GetFitPositions();
                 History.Pop();
+                if (Round > 2) GetFitPositions();
                 IsRunning = true;
             }
         }

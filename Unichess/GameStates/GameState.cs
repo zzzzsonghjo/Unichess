@@ -1,4 +1,5 @@
-﻿using Unichess.Pieces;
+﻿using System.Collections;
+using Unichess.Pieces;
 
 namespace Unichess.GameStates
 {
